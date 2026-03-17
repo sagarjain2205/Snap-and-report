@@ -1,0 +1,49 @@
+# ======================
+# Node.js (client + server)
+# ======================
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# ======================
+# Python / ML
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+# Model files
+*.pt
+*.pth
+
+# Python packaging
+*.egg-info/
+
+# ======================
+# OS files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Misc
+# ======================
+*.tmp
+*.cache
+
+# ======================
+.vscode/
+.DS_Store
