@@ -20,9 +20,26 @@ const app = express()
 // ✅ Connect DB
 connectDB().then(() => autoSeed())
 
-// ✅ SIMPLE CORS (Render + Vercel friendly)
+// 🔥 FINAL CORS FIX (LOCAL + VERCEL)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://snap-and-report-fyzscyhcw-jainsagar00003-5829s-projects.vercel.app"
+]
+
 app.use(cors({
-  origin: "http://localhost:5173",   // 🔥 simple rakho abhi
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true
+}))
+
+// 🔥 Handle preflight
+app.options('*', cors({
+  origin: allowedOrigins,
   credentials: true
 }))
 
