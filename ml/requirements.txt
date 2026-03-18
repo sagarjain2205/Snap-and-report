@@ -1,3 +1,5 @@
+setuptools
+wheel
 ultralytics
 easyocr
 opencv-python-headless
