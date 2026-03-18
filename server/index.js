@@ -17,52 +17,43 @@ const statsRoutes   = require('./routes/stats')
 
 const app = express()
 
-// Connect DB then auto seed demo users
+// ✅ Connect DB
 connectDB().then(() => autoSeed())
 
-// 🔥 DEBUG (check logs once)
-console.log("CLIENT_URL:", process.env.CLIENT_URL)
-
+// 🔥 IMPORTANT: CORS (FINAL FIX)
 const allowedOrigin = process.env.CLIENT_URL
 
-// ✅ CORS (FINAL FIX)
 app.use(cors({
   origin: allowedOrigin,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true
 }))
 
-// ✅ PRE-FLIGHT FIX (VERY IMPORTANT)
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", allowedOrigin)
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-  res.header("Access-Control-Allow-Credentials", "true")
-  return res.sendStatus(200)
-})
+// 🔥 HANDLE PREFLIGHT (OPTIONS)
+app.options('*', cors({
+  origin: allowedOrigin,
+  credentials: true
+}))
 
-// Middleware
+// 🔥 BODY PARSER (CORS ke baad, routes se pehle)
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
-// Health check
+// ✅ HEALTH CHECK
 app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Snap & Report API running!',
-    version: '2.0.0'
   })
 })
 
-// Routes
+// ✅ ROUTES (IMPORTANT: CORS ke baad hone chahiye)
 app.use('/api/auth',     authRoutes)
 app.use('/api/reports',  reportRoutes)
 app.use('/api/challans', challanRoutes)
 app.use('/api/detect',   detectRoutes)
 app.use('/api/stats',    statsRoutes)
 
-// 404 handler
+// ❌ 404
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -70,10 +61,10 @@ app.use((req, res) => {
   })
 })
 
-// Error handler
+// ❌ ERROR HANDLER
 app.use(errorHandler)
 
-// Start server
+// 🚀 START SERVER
 const PORT = process.env.PORT || 5000
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`)
