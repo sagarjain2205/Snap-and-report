@@ -20,34 +20,35 @@ const app = express()
 // ✅ Connect DB
 connectDB().then(() => autoSeed())
 
-// 🔥 FINAL CORS (NO BUG VERSION)
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://snap-and-report-fyzscyhcw-jainsagar00003-5829s-projects.vercel.app"
-]
-
+// 🔥 FINAL PERMANENT CORS FIX
 app.use(cors({
   origin: (origin, callback) => {
-    // allow requests with no origin (mobile apps, curl, etc.)
+    // allow requests without origin (Postman etc.)
     if (!origin) return callback(null, true)
 
-    if (allowedOrigins.includes(origin)) {
+    // ✅ allow localhost
+    if (origin === "http://localhost:5173") {
       return callback(null, true)
-    } else {
-      return callback(null, false)
     }
+
+    // ✅ allow ALL Vercel deployments (preview + production)
+    if (origin.endsWith(".vercel.app")) {
+      return callback(null, true)
+    }
+
+    return callback(new Error("Not allowed by CORS"))
   },
   credentials: true
 }))
 
-// 🔥 IMPORTANT: preflight fix
+// 🔥 handle preflight
 app.options('*', cors())
 
 // ✅ Middleware
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
-// ✅ Health check
+// ✅ Health route
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -62,7 +63,7 @@ app.use('/api/challans', challanRoutes)
 app.use('/api/detect',   detectRoutes)
 app.use('/api/stats',    statsRoutes)
 
-// ❌ 404 handler
+// ❌ 404
 app.use((req, res) => {
   res.status(404).json({
     success: false,
