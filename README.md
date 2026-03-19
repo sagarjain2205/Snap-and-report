@@ -1,6 +1,10 @@
 # 🚗 Snap & Report — AI Illegal Parking Reporter
 
-> 🚀 Making Indian roads smarter with AI-powered violation reporting
+<p align="center">
+  <a href="https://snap-and-report-4q8hgism0-jainsagar00003-5829s-projects.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Open%20App-blue?style=for-the-badge&logo=vercel" />
+  </a>
+</p>
 
 ---
 
@@ -10,22 +14,22 @@ Illegal parking is a **major issue across India 🇮🇳** — causing traffic c
 
 Even after reporting:
 
-* ❌ Citizens must go through **long manual processes**
-* ⏳ Complaints take **too long to resolve**
-* 🏢 Often requires visiting **police stations physically**
+* ❌ Long manual complaint processes
+* ⏳ Delayed resolution
+* 🏢 Physical visits to police stations
 
 👉 There was no **simple, digital, real-time solution**
 
 ---
 
-## 💡 Our Solution
+## 💡 Solution
 
-**Snap & Report** is an AI-powered platform where:
+**Snap & Report** is a full-stack AI-powered system that:
 
-* 👤 Citizens can report illegal parking instantly
-* 👮 Police officers can verify and take action digitally
-* 🤖 AI automates number plate detection
-* 📍 Location-based routing ensures correct officer assignment
+* 📸 Lets citizens report violations instantly
+* 🤖 Uses AI to detect number plates
+* 👮 Routes reports to relevant officers
+* 💰 Enables digital challan generation
 
 ---
 
@@ -34,100 +38,91 @@ Even after reporting:
 ```text
 User uploads vehicle image 📸
         ↓
-AI detects number plate (YOLOv8 + EasyOCR)
+Image stored on Cloudinary ☁️
         ↓
-User provides location / GPS 📍
+Backend sends image URL to ML API (HuggingFace)
         ↓
-Report routed to respective zone officer 👮
+YOLOv8 + EasyOCR detect number plate 🤖
         ↓
-Officer verifies → sets challan amount 💰
+Report saved in MongoDB 🗄️
         ↓
-Report status:
-   • Pending ⏳
-   • Approved & Challan Issued ✅
-   • Rejected ❌
+Assigned officer verifies 👮
+        ↓
+Challan generated 💰
 ```
 
 ---
 
-## 🧠 AI Integration (Core Highlight)
+## 🧠 AI / ML Pipeline
 
-* 🤖 **YOLOv8** → Detects vehicle and plate region
+* 🤖 **YOLOv8** → Detects vehicle & plate region
 * 🔍 **EasyOCR** → Extracts number plate text
-* 📍 Location-based mapping → Assigns correct police zone
+* ☁️ **HuggingFace Spaces (Docker)** → ML deployment
+* 🔗 Backend communicates via REST API
 
-👉 Reduces manual effort and speeds up enforcement ⚡
+👉 Fully decoupled ML microservice architecture ⚡
 
 ---
 
-## 👤 Citizen Portal
+## 👤 Citizen Features
 
-* 📤 Upload illegal parking reports
-* 📊 View all submitted reports
-* 📌 Track report status (Pending / Verified / Challan Issued)
-* 📁 Personal dashboard with report history
+* 📤 Upload violation images
+* 📊 Track report status
+* 📁 View history
+* 📌 Dashboard insights
 
 ---
 
 ## 👮 Police Dashboard
 
-* 📥 Receive reports based on zone
-* 🔍 Verify violations with AI-detected plate
-* 💰 Set challan amount
-* 📊 Dashboard shows:
-
-  * Total reports
-  * Pending cases
-  * Verified cases
-  * Challans issued
-
-👉 Full workflow management in one place
+* 📥 Zone-based report assignment
+* 🔍 AI-assisted verification
+* 💰 Issue challans
+* 📊 Analytics dashboard
 
 ---
 
-## 💸 Challan Management System
+## 💸 Challan Management
 
-* 📄 Generate challan records
-* 💰 Track:
-
-  * Amount collected
-  * Pending payments
-* 📥 Download challan PDF
-* 📊 Real-time analytics
+* 📄 Generate challans
+* 💰 Track payments
+* 📥 Download PDF
+* 📊 Revenue analytics
 
 ---
 
-## 🔐 Role-Based Access System
+## 🔐 Authentication & Roles
 
-| Role    | Capabilities                     |
-| ------- | -------------------------------- |
-| Citizen | Report violations & track status |
-| Officer | Verify reports & issue challans  |
-| Admin   | Full system control              |
+| Role    | Capabilities        |
+| ------- | ------------------- |
+| Citizen | Report & track      |
+| Officer | Verify & challan    |
+| Admin   | Full system control |
 
 ---
 
 ## 🧱 Tech Stack
 
-**Frontend**
+<p align="center">
+  <img src="https://img.shields.io/badge/Frontend-React-blue?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge&logo=node.js" />
+  <img src="https://img.shields.io/badge/Database-MongoDB-darkgreen?style=for-the-badge&logo=mongodb" />
+  <img src="https://img.shields.io/badge/AI-YOLOv8-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/OCR-EasyOCR-red?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/ML%20Deployment-HuggingFace-yellow?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Cloudinary-Images-blueviolet?style=for-the-badge" />
+</p>
 
-* React.js + Tailwind CSS + Vite
+---
 
-**Backend**
+## ☁️ Deployment Architecture
 
-* Node.js + Express.js
-* MongoDB Atlas
-
-**AI / ML**
-
-* YOLOv8
-* EasyOCR
-* FastAPI
-
-**Other Tools**
-
-* Cloudinary (image storage)
-* JWT Authentication
+```text
+Frontend → Vercel
+Backend → Render
+ML API → HuggingFace (Docker)
+Database → MongoDB Atlas
+```
 
 ---
 
@@ -145,28 +140,28 @@ Report status:
 
 ```text
 client/   → React frontend  
-server/   → Node.js backend  
-ml/       → AI detection service  
+server/   → Node backend  
+ml/       → FastAPI ML service  
 ```
 
 ---
 
-## 🚀 Why This Project Stands Out
+## 🚀 Key Highlights
 
-* ✅ Solves a **real-world civic problem**
-* 🤖 Combines **AI + Full Stack Development**
-* 🔄 End-to-end system (Report → Verify → Challan)
-* 📊 Real-time dashboards for both users and police
-* ☁️ Cloud-ready architecture
+* 🔥 Full-stack + AI integration
+* ⚡ Microservice architecture
+* 🌐 Fully deployed system
+* 🤖 Real-time ML inference
+* 📊 Production-ready dashboards
 
 ---
 
 ## 🔮 Future Scope
 
-* 📱 Mobile application
-* 🎥 Live camera detection
-* 📍 Automatic GPS tracking
-* 🤖 Fully automated challan system
+* 📱 Mobile app (React Native)
+* 🎥 CCTV integration
+* 📍 Automatic GPS detection
+* 🤖 Fully automated challans
 
 ---
 
@@ -174,8 +169,14 @@ ml/       → AI detection service
 
 **Sagar Jain**
 
+<p align="center">
+  <a href="https://github.com/YOUR_USERNAME">
+    <img src="https://img.shields.io/badge/GitHub-Profile-black?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a ⭐ on GitHub!
+If you like this project, consider giving it a ⭐ on GitHub!
